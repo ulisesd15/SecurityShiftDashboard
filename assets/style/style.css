@@ -1,0 +1,9 @@
+*{
+    box-sizing: border-box;
+}
+
+
+.cityInput {
+    max-width: 70%;
+    
+}
