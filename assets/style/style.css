@@ -1,3 +1,8 @@
+:root {
+
+}
+
+
 *{
     box-sizing: border-box;
 }
@@ -6,4 +11,13 @@
 .cityInput {
     max-width: 70%;
     
+}
+
+.btn {
+
+}
+
+.searchBtn {
+    max-width: 25%;
+   
 }

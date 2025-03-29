@@ -51,3 +51,46 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchWeather('Los Angeles'); // Change this to user’s city
     fetchCrimeReports();
 });
+
+
+// 
+
+$(document).ready(function () {
+    $("#searchBtn").click(function () {
+        let city = $("#cityInput").val().trim();
+
+        if (city === "") {
+            alert("Please enter a city name.");
+            return;
+        }
+
+        fetchWeather(city);
+    });
+
+    function fetchWeather(city) {
+        let apiKey = "YOUR_API_KEY"; // Replace with your actual API key
+        let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
+
+        $.ajax({
+            url: apiUrl,
+            method: "GET",
+            success: function (data) {
+                console.log(data); // Check API response in the console
+                displayWeather(data);
+            },
+            error: function () {
+                alert("City not found. Please try again.");
+            }
+        });
+    }
+
+    function displayWeather(data) {
+        let weatherInfo = `
+            <h4>${data.name}, ${data.sys.country}</h4>
+            <p>Temperature: ${data.main.temp}°C</p>
+            <p>Weather: ${data.weather[0].description}</p>
+        `;
+
+        $(".selection").html(weatherInfo); // Update the weather section
+    }
+});
