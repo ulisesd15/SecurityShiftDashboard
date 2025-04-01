@@ -7,7 +7,7 @@ var createDataContainer = function () {
     var dataContainer = $('#dataContainer');
 
     var dataRow = $('<div>');
-    dataRow.addClass('sow dataRow');
+    dataRow.addClass('row dataRow p-5');
 
 
     var dataName = $('<div>');
