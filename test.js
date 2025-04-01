@@ -94,3 +94,39 @@ $(document).ready(function () {
         $(".selection").html(weatherInfo); // Update the weather section
     }
 });
+
+document.getElementById('cityInput').addEventListener('input', function() {
+    var input = this.value;
+    var apiKey = 'your_api_key_here';
+    var url = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${apiKey}`;
+  
+    if (input.length > 2) {
+      fetch(url)
+        .then(response => response.json())
+        .then(data => {
+          var suggestions = document.getElementById('suggestions');
+          suggestions.innerHTML = '';
+          data.forEach(city => {
+            var item = document.createElement('div');
+            item.textContent = `${city.name}, ${city.state ? city.state + ', ' : ''}${city.country}`;
+            item.onclick = function() {
+              document.getElementById('cityInput').value = this.textContent;
+              suggestions.innerHTML = '';
+              // You can trigger further actions here, such as fetching weather data for the selected city
+            };
+            suggestions.appendChild(item);
+          });
+        })
+        .catch(error => console.error('Error fetching city suggestions:', error));
+    } else {
+      document.getElementById('suggestions').innerHTML = '';
+    }
+  });
+  
+  // Close the dropdown when clicking outside
+  document.addEventListener('click', function(e) {
+    if (!e.target.closest('.autocomplete-container')) {
+      document.getElementById('suggestions').innerHTML = '';
+    }
+  });
+  

@@ -16,17 +16,18 @@
 <body>
     <nav class="d-flex mb-4 mt-4 ms-4 me-4 gap-2">
         <button class="btn btn-primary col-6">San Diego, CA</button>
-        <button class="btn btn-primary col-6">Weather ☀️</bu3tton>
+        <button class="btn btn-primary col-6">Weather ☀️</button>
     </nav>
 
         <div class="container-fluid">
             <div class="row d-flex LocationInput">
                 <div class="col-6 d-flex city">
                     <input type="text" id="cityInput" class="cityInput me-4 mg-4 form-control w-50" placeholder="Input name of city"></input>
+                    <div id="suggestions" class="autocomplete-items"></div>
                     <button class="searchBtn btn btn-dark">Search</button>
                 </div>
-                <div class="col-6">
-                    <a class="currentCity"> use current location</a>
+                <div class="col-6 align-items-center d-flex justify-content-center">
+                    <button class="btn btn-secondary currentCity"> use current location</button>
                 </div>
 
             </div>  
@@ -35,11 +36,28 @@
         <hr>
 
         <div class="row">
-            <div class="col-4">
+            <div class="col-12 p-5" id="dataContainer">
+
+
+                <div class="row incidentContainer">
+                    <div class="col-6 dataName">
+                        <p>theft from vehicle</p>
+                    </div>
+                    <div class="col data1">
+                        <p>rain%</p>
+                    </div>
+                    <div class="col data2">
+                        <p>5 miles</p>
+                    </div>
+                    <div class="col data3">
+                        <p>11:59PM</p>
+                    </div>
+                </div>
+
+
+
 
             </div>
-            <div class="col-8"></div>
-            
         </div>
 
 

@@ -1,44 +1,46 @@
-var cityInput = $('#cityInput'); 
-var newsKey = 'd6cab18fc0c54fcf9aaa61177589c449';
+var searchBtn = $('.searchBtn');
+var apiKey = "931664c785d510f11897e2e2f9ec4232";
+var newsKey = "d6cab18fc0c54fcf9aaa61177589c449";
 
 
-var createCrimeBlock = function () {
-    var incidentBlock = $("<div>");
-    incidentBlock.addClass("row incidentContainer");
+var createDataContainer = function () {
+    var dataContainer = $('#dataContainer');
+
+    var dataRow = $('<div>');
+    dataRow.addClass('sow dataRow');
 
 
-    var incidentContainer = $("<div>");
-    incidentContainer.addClass("col-6 incidentName");
+    var dataName = $('<div>');
+    dataName.addClass('col-6 dataName');
+    dataName.text('Theft from Vehicle'); // Example incident name
 
-    var rainPercentage = $("<div>");
-    rainPercentage.addClass("col");
+    var data1 = $('<div>');
+    data1.addClass('col data1');
+    data1.text('55% rain'); // Example rain percentage value
 
-    var proximity = $("<div>");
-    proximity.addClass("col");
+    var data2 = $('<div>');
+    data2.addClass('col data2');
+    data2.text('1.2 Miles'); // Example proximity value
 
-    var incidentTime = $("<div>");
-    incidentTime.addClass(col);
+    var data3 = $('<div>');
+    data3.addClass('col data3');
+    data3.text('00:00PM');
 
+    // Append the elements to the incidentContainer
+    
+    dataRow.append(dataName);
+    dataRow.append(data1);
+    dataRow.append(data2);
+    dataRow.append(data3);
+
+    dataContainer.append(dataRow);
 
 
 };
+searchBtn.on('click', function () {
+    createDataContainer();
+});
 
-var createWeatherBlock = function () {
-    var weatherBlock = $("<div>");
-    weatherBlock.addClass("row weatherContainer");
-
-    var weatherContainer = $("<div>");
-    weatherContainer.addClass("col-6 weatherDay");
-
-    var rainPercentage = $("<div>");
-    rainPercentage.addClass("col");
-
-    var temperature = $("<div>");
-    temperature.addClass("col");
-
-    var windSpeed = $("<div>");
-    windSpeed.addClass("col");
-}
 
 
 
@@ -75,9 +77,8 @@ var createWeatherBlock = function () {
 // }
 // );
 
-var fetchWeather = function (city) {
-    var apiKey = '931664c785d510f11897e2e2f9ec4232';
-    var url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${apiKey}`;
+var citySearch = function (city) {
+    var url = `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=10&appid=${apiKey}`;
 
     fetch(url)
         .then(function (response) {
@@ -95,6 +96,40 @@ var fetchWeather = function (city) {
         });
 }
 
-fetchWeather('Birmingham');
+citySearch('Birmingham');
+
+// provides possible city matches for a given city name
 
 
+document.getElementById('cityInput').addEventListener('input', function () {
+    var input = this.value;
+
+    var url = `https://api.openweathermap.org/geo/1.0/direct?q=${input}&limit=5&appid=${apiKey}`;
+
+    if(input.length > 2) {
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+        
+            
+            var suggestions = document.getElementById('suggestions');
+            suggestions.innerHTML = ''; // Clear previous suggestions
+
+            data.forEach(city => {
+                var item = document.createElement('div');
+                item.textContent = `${city.name}, ${city.state ? city.state + ', ' : ''}${city.country}`;
+                item.onclick = function() {
+                    document.getElementById('cityInput').value = this.textContent;
+                    suggestions.innerHTML = ''; // Clear suggestions after selection
+                    citySearch(this.textContent); // Call the city search function
+                };
+                suggestions.appendChild(item);
+            });
+        })
+            .catch(error => console.error('Error fetching city suggestions:', error));
+        } else {
+            document.getElementById('suggestions').innerHTML = ''; // Clear suggestions if input is less than 3 characters
+        }
+
+    }
+);
