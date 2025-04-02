@@ -3,9 +3,9 @@
 }
 
 
-*{
+/* *{
     box-sizing: border-box;
-}
+} */
 
 #dataContainer{
   border: 1px solid #ccc;
@@ -34,6 +34,10 @@
 
 
 
+
+
+
+/* autocomplete section */
 
 
 

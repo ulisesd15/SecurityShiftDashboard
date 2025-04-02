@@ -130,3 +130,4 @@ document.getElementById('cityInput').addEventListener('input', function() {
     }
   });
   
+
